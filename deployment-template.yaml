@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+        - name: flask-container
+          image: <ECR_IMAGE_PLACEHOLDER>
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: "database-1.c9gi28iw6c6y.ap-south-1.rds.amazonaws.com"
+            - name: DB_USER
+              value: "admin"
+            - name: DB_PASSWORD
+              value: "adminadmin"
+            - name: DB_NAME
+              value: "my_product"
