@@ -88,15 +88,25 @@ pipeline {
                 dir('Flask-App-to-AWS-EKS/terraform') {
                     script {
                         def ecrUri = sh(
-                            script: "terraform output -raw repository_url",
-                            returnStdout: true
-                        ).trim()
-                        env.ECR_URI = ecrUri
-                        echo "ECR URI: ${env.ECR_URI}"
+                        script: "terraform output repository_url || echo 'missing'",
+                        returnStdout: true
+                    ).trim()
+
+                    if (ecrUri == 'missing') {
+                        error("Terraform output 'repository_url' is missing. Check if the ECR module or output is defined correctly.")
                     }
-                }
+
+                    env.ECR_URI = sh(
+                        script: "terraform output -raw repository_url",
+                        returnStdout: true
+                    ).trim()
+
+                    echo "ECR URI: ${env.ECR_URI}"
             }
         }
+    }
+}
+
 
         stage('Docker Build & Push') {
             steps {
