@@ -49,5 +49,17 @@ echo "Installing eksctl..."
 curl -s --location "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz
 sudo mv eksctl /usr/local/bin/
 
+### Install AWS CLI ###
+echo "Installing AWS CLI..."
+sudo apt update -y
+sudo apt install -y unzip curl
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Confirm installation
+aws --version
+
 echo "All tools installed successfully."
 echo "You may need to reboot or re-login for Docker group membership to apply."
