@@ -43,6 +43,18 @@ variable "aws_region" {
   description = "AWS region"
 }
 
+variable "eks_node_sg_id" {
+  description = "Security group ID for EKS nodes to allow HTTP access"
+  type        = string
+}
+
+
+variable "ssh_key_name" {
+  description = "SSH key name for node access (optional)"
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}

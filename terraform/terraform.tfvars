@@ -1,6 +1,7 @@
 aws_region = "ap-south-1"
 
 vpc_cidr = "10.0.0.0/16"
+public_key_path = "C:/Users/ashra/.ssh/id_rsa.pub" #"~/.ssh/id_rsa.pub"
 
 public_subnet_cidrs = [
   "10.0.1.0/24",

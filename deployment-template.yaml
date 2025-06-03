@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: flask-container
-          image: <ECR_IMAGE_PLACEHOLDER>
+          image: 442426881914.dkr.ecr.ap-south-1.amazonaws.com/my-flask-repo #<ECR_IMAGE_PLACEHOLDER>
           ports:
             - containerPort: 5000
           env:
             - name: DB_HOST
-              value: "database-1.c9gi28iw6c6y.ap-south-1.rds.amazonaws.com"
+              value: "database-1.c74044sww1fc.ap-south-1.rds.amazonaws.com"
             - name: DB_USER
               value: "admin"
             - name: DB_PASSWORD

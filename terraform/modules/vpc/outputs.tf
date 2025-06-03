@@ -9,3 +9,7 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = aws_subnet.private[*].id
 }
+output "eks_node_sg_id" {
+  description = "Security group ID for the EKS worker nodes"
+  value       = aws_security_group.eks_node_sg.id
+}

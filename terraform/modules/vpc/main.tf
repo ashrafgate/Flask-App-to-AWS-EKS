@@ -106,3 +106,30 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
+
+resource "aws_security_group" "eks_node_sg" {
+  name        = "${var.name}-eks-node-sg"
+  description = "Allow HTTP access to EKS worker nodes"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.name}-eks-node-sg"
+  }
+}
+

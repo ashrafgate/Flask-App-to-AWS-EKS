@@ -3,6 +3,11 @@ variable "public_subnet_cidrs" {}
 
 variable "private_subnet_cidrs" {}
 
+variable "public_key_path" {
+  description = "Path to the public SSH key file (.pub)"
+  type        = string
+}
+
 
 variable "repository_name" {}
 variable "name" {
