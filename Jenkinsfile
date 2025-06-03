@@ -1,4 +1,4 @@
-pipeline {
+rpipeline {
     agent any
 
     environment {
@@ -47,16 +47,16 @@ pipeline {
                 dir('Flask-App-to-AWS-EKS/terraform') {
                     script {
                         def ecrUri = sh(
-                        script: "terraform output repository_url || echo 'missing'",
+                        script: "terraform output ecr_repository_url || echo 'missing'",
                         returnStdout: true
                     ).trim()
 
                     if (ecrUri == 'missing') {
-                        error("Terraform output 'repository_url' is missing. Check if the ECR module or output is defined correctly.")
+                        error("Terraform output 'ecr_repository_url' is missing. Check if the ECR module or output is defined correctly.")
                     }
 
                     env.ECR_URI = sh(
-                        script: "terraform output -raw repository_url",
+                        script: "terraform output -raw ecr_repository_url",
                         returnStdout: true
                     ).trim()
 
