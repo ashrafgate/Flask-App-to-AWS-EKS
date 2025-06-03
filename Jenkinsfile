@@ -50,27 +50,29 @@ pipeline {
 							script: "terraform output -raw ecr_repository_url",
 							returnStdout: true
 						).trim()
-						env.ECR_URI = ecrUri
-						echo "ECR URI: ${env.ECR_URI}"
+						echo "Fetched ECR URI: ${ecrUri}"
+						env.ECR_URI = "${ecrUri}"
 					}
 				}
 			}
 		}
 
 
-        stage('Docker Build & Push') {
-            steps {
-                dir('Flask-App-to-AWS-EKS/flaskapp') {
-                    script {
-                        sh """
-                            aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin ${env.ECR_URI}
-                            docker build -t ${env.ECR_URI}:$IMAGE_TAG .
-                            docker push ${env.ECR_URI}:$IMAGE_TAG
-                        """
-                    }
-                }
-            }
-        }
+
+		stage('Docker Build & Push') {
+			steps {
+				dir('Flask-App-to-AWS-EKS/flaskapp') {
+					script {
+						echo "Using ECR URI: ${env.ECR_URI}"
+						sh """
+							aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin ${env.ECR_URI}
+							docker build -t ${env.ECR_URI}:$IMAGE_TAG .
+							docker push ${env.ECR_URI}:$IMAGE_TAG
+						"""
+					}
+				}
+			}
+		}
 
         stage('Deploy to EKS') {
             steps {
