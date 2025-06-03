@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: flask-container
-          image: 442426881914.dkr.ecr.ap-south-1.amazonaws.com/my-flask-repo #<ECR_IMAGE_PLACEHOLDER>
+          image: <ECR_IMAGE_PLACEHOLDER>
           ports:
             - containerPort: 5000
           env:
