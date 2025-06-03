@@ -40,17 +40,33 @@ pipeline {
                             echo "ECR repo does not exist. Will be created by Terraform."
                         }
 
-                        // Check and import existing IAM role for EKS cluster
+                        // Check and import existing IAM role
                         def iamRoleExists = sh (
-                            script: "aws iam get-role --role-name eks-cluster-role --region $REGION > /dev/null 2>&1 && echo yes || echo no",
+                            script: "aws iam get-role --role-name eks-cluster-role > /dev/null 2>&1 && echo yes || echo no",
                             returnStdout: true
                         ).trim()
 
                         if (iamRoleExists == 'yes') {
-                            echo "IAM role eks-cluster-role exists. Importing into Terraform state."
+                            echo "IAM role exists. Importing."
                             sh 'terraform import module.eks.aws_iam_role.eks_role eks-cluster-role || echo "Already imported or import failed."'
                         } else {
-                            echo "IAM role eks-cluster-role does not exist. Will be created by Terraform."
+                            echo "IAM role does not exist. Will be created."
+                        }
+
+                        // Check and import existing EKS cluster
+                        def eksExists = sh (
+                            script: "aws eks describe-cluster --name $CLUSTER_NAME --region $REGION > /dev/null 2>&1 && echo yes || echo no",
+                            returnStdout: true
+                        ).trim()
+
+                        if (eksExists == 'yes') {
+                            echo "EKS cluster exists. Importing into Terraform."
+                            sh """
+                                terraform import module.eks.aws_eks_cluster.this[0] $CLUSTER_NAME || echo "Already imported or import failed."
+                                terraform import module.eks.aws_eks_node_group.default $CLUSTER_NAME:$CLUSTER_NAME-nodegroup || echo "Already imported or import failed."
+                            """
+                        } else {
+                            echo "EKS cluster does not exist. Will be created."
                         }
                     }
                 }
