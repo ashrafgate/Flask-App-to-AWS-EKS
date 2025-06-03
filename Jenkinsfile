@@ -17,7 +17,7 @@ pipeline {
 
         stage('Git Clone') {
             steps {
-                sh 'git clone --branch main https://github.com/ankitalodha05/-Deploy-a-Python-Flask-App-to-AWS-EKS-using-CI-CD.git project-dir'
+                sh 'git clone --branch main https://github.com/ashrafgate/Flask-App-to-AWS-EKS.git'
             }
         }
 
