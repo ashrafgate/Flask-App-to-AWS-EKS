@@ -25,7 +25,7 @@ sudo systemctl start jenkins
 
 ### Install Terraform ###
 echo "Installing Terraform..."
-TERRAFORM_VERSION="1.8.4"
+TERRAFORM_VERSION="1.12.1"
 curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip
 unzip terraform.zip
 sudo mv terraform /usr/local/bin/
