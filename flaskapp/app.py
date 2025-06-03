@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Database connection details (replace these with your RDS details)
 db_config = {
-    'host': 'database-1.c9gi28iw6c6y.ap-south-1.rds.amazonaws.com',  # Example: 'your-db-name.123456789012.us-west-1.rds.amazonaws.com'
+    'host': 'database-1.c74044sww1fc.ap-south-1.rds.amazonaws.com',  # Example: 'your-db-name.123456789012.us-west-1.rds.amazonaws.com'
     'user': 'admin',
     'password': 'adminadmin',
     'database': 'my_product',
